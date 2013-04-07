@@ -15,8 +15,8 @@ sub UNIVERSAL::dry_it :ATTR(CODE) {
       my $code   = shift;
       my $target = shift;
 
-      die "Should be MooseX::Role::DryRunnable\n" 
-        unless $target->DOES('MooseX::Role::DryRunnable');
+      die "Should be MooseX::Role::DryRunnable::Base\n" 
+        unless $target->DOES('MooseX::Role::DryRunnable::Base');
 
       $target->is_dry_run() 
         ? $target->on_dry_run($method,@_) 
@@ -39,7 +39,7 @@ MooseX::Role::DryRunnable::Attribute - EXPERIMENTAL - attribute to add a Dry Run
   use Data::Dumper;
   use Moose;
   use MooseX::Role::DryRunnable::Attribute;
-  with 'MooseX::Role::DryRunnable';
+  with 'MooseX::Role::DryRunnable::Base';
 
   has dry_run => (is => 'ro', isa => 'Bool', default => 0);
 
@@ -60,7 +60,7 @@ MooseX::Role::DryRunnable::Attribute - EXPERIMENTAL - attribute to add a Dry Run
 
 =head1 DESCRIPTION
 
-This module can be used in Moose classes who uses the role MooseX::Role::DryRunnable. Provides an Attribute :dry_it. EXPERIMETAL
+This module can be used in Moose classes who uses the role MooseX::Role::DryRunnable::Base. Provides an Attribute :dry_it. EXPERIMETAL
 
 My idea is put the information about the dry run capability close to the method.
 
@@ -84,27 +84,3 @@ to this package's RT tracker at <bug-MooseX-Role-DryRunnable@rt.cpan.org>.
 =head1 AUTHOR
 
 Tiago Peczenyj <tiago.peczenyj@gmail.com>
-
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright (c) 2023 Tiago Peczenyj <tiago.peczenyj@gmail.com>
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the
-
-    Free Software Foundation, Inc.
-    59 Temple Place, Suite 330
-    Boston, MA  02111-1307  USA
-
-=cut

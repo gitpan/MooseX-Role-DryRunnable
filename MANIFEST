@@ -8,6 +8,7 @@ README.md
 dist.ini
 lib/MooseX/Role/DryRunnable.pm
 lib/MooseX/Role/DryRunnable/Attribute.pm
+lib/MooseX/Role/DryRunnable/Base.pm
 perlcritic.rc
 samples/example.pl
 t/00-compile.t

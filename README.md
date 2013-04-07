@@ -41,7 +41,7 @@ To put the information about the `dry run` capability close to the method, there
 	use Data::Dumper;
 	use Moose;
 	use MooseX::Role::DryRunnable::Attribute;
-	with 'MooseX::Role::DryRunnable';
+	with 'MooseX::Role::DryRunnable::Base';
 
 	has dry_run => (is => 'ro', isa => 'Bool', default => 0);
 
@@ -66,10 +66,11 @@ Unfortunately, this attribute is injected in the UNIVERSAL. It is Experimental. 
 
 100% code coverage by 3 tests.
 
-	---------------------------- ------ ------ ------ ------ ------ ------ ------
+	--------------------------- ------ ------ ------ ------ ------ ------ ------
 	File                           stmt   bran   cond    sub    pod   time  total
 	---------------------------- ------ ------ ------ ------ ------ ------ ------
-	...ooseX/Role/DryRunnable.pm  100.0    n/a    n/a  100.0    n/a   77.3  100.0
-	.../DryRunnable/Attribute.pm  100.0  100.0    n/a  100.0    n/a   22.7  100.0
+	...ooseX/Role/DryRunnable.pm  100.0    n/a    n/a  100.0    n/a   70.5  100.0
+	.../DryRunnable/Attribute.pm  100.0  100.0    n/a  100.0    n/a   24.3  100.0
+	.../Role/DryRunnable/Base.pm  100.0    n/a    n/a  100.0    n/a    5.2  100.0
 	Total                         100.0  100.0    n/a  100.0    n/a  100.0  100.0
 	---------------------------- ------ ------ ------ ------ ------ ------ ------

@@ -7,7 +7,7 @@ subtest "should do nothing if not in dry run mode (using attributes)" => sub {
     package Foo;
     use Moose;
     use MooseX::Role::DryRunnable::Attribute;
-    with 'MooseX::Role::DryRunnable';
+    with 'MooseX::Role::DryRunnable::Base';
 
     sub bar :dry_it {
       Test::More::ok(1, "should be called");
@@ -36,7 +36,7 @@ subtest "should call on_dry_run if in dry run mode (using attributes)" => sub {
     package Foo2;
     use Moose;
     use MooseX::Role::DryRunnable::Attribute;
-    with 'MooseX::Role::DryRunnable' ;
+    with 'MooseX::Role::DryRunnable::Base' ;
 
     sub bar :dry_it{
       Test::More::fail("should not be called")
@@ -76,5 +76,5 @@ subtest "can't call on_dry_run if in dry run mode (using attributes) and it is n
     my $foo = Foo3->new();
     $foo->bar();
   };
-  is($@,"Should be MooseX::Role::DryRunnable\n");
+  is($@,"Should be MooseX::Role::DryRunnable::Base\n");
 };

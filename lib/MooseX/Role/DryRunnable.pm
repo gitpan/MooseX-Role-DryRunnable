@@ -3,37 +3,27 @@ use warnings;
 package MooseX::Role::DryRunnable;
 
 use MooseX::Role::Parameterized;
+with 'MooseX::Role::DryRunnable::Base';
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 parameter methods => (
-  traits  => ['Array'],
-  is      => 'ro',
-  isa     => 'ArrayRef[Str]',
-  default => sub { [] },
-  handles => { all_methods => 'elements' },
+  is       => 'ro',
+  required => 1
 );
 
 role {
   my $p = shift;
   
-  requires 'is_dry_run';
-  requires 'on_dry_run';
-  
-  foreach my $method ($p->all_methods){
-    around $method => sub { 
-        my $code   = shift;
-        my $target = shift;
+  around $p->methods() => sub { 
+    my $method = shift;
+    my $self   = shift;
 
-        die "Target does not MooseX::Role::DryRunnable" 
-          unless $target->DOES('MooseX::Role::DryRunnable');
-
-        $target->is_dry_run() 
-          ? $target->on_dry_run($method,@_) 
-          : $target->$code(@_)  
-      }
+    $self->is_dry_run() 
+      ? $self->on_dry_run($method,@_) 
+      : $self->$method(@_)  
   }
 };
 
@@ -75,13 +65,23 @@ MooseX::Role::DryRunnable - role for add a dry_run option into your Moose Class
 
 This module is a L<Moose> Role who require two methods, `is_dry_run` and `on_dry_run`, the first method return true if we are in this mode (reading from a configuration file, command line option or some environment variable) and the second receive the name of the method and the list of arguments.
 
+=head1 REQUIRES
+
+=head2 is_dry_run
+
+This method must return one boolean value. If true, we will execute the alternate code described in `on_dry_run`. You must implement!
+
+=head2 on_dry_run
+
+This method will receive the method name and all of the parameters form the original method. You must implement!
+
 =head1 ROLE PARAMETERS 
 
 This Role is Parameterized, and we can choose the set of methods to apply the dry_run capability.
 
-=head2 methods (ArrayRef[Str])
+=head2 methods
 
-This is the set of methods to be changed. Each method in this parameter will receive an extra code (using Moose 'around') to act as a Dry Run Method.
+This is the set of methods to be changed, can be a string, an array ref or a regular expression. Each method in this parameter will receive an extra code (using Moose 'around') to act as a Dry Run Method.
 
 =head1 SEE ALSO
 
