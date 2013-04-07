@@ -6,7 +6,7 @@ use MooseX::Role::Parameterized;
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 parameter methods => (
   traits  => ['Array'],
@@ -32,7 +32,7 @@ role {
 
         $target->is_dry_run() 
           ? $target->on_dry_run($method,@_) 
-          : $code->($target, @_)  
+          : $target->$code(@_)  
       }
   }
 };
@@ -48,7 +48,6 @@ MooseX::Role::DryRunnable - role for add a dry_run option into your Moose Class
 =head1 SYNOPSIS
 
   package Foo;
-  use Data::Dumper;
   use Moose;
 
   with 'MooseX::Role::DryRunnable' => { 
@@ -102,23 +101,8 @@ Tiago Peczenyj <tiago.peczenyj@gmail.com>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2023 Tiago Peczenyj <tiago.peczenyj@gmail.com>
+Copyright (c) 2013 Tiago Peczenyj <tiago.peczenyj@gmail.com>
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the
-
-    Free Software Foundation, Inc.
-    59 Temple Place, Suite 330
-    Boston, MA  02111-1307  USA
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself, either Perl version 5.10.0 or, at your option, any later version of Perl 5 you may have available.
 
 =cut

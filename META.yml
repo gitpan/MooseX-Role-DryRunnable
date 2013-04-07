@@ -20,4 +20,4 @@ resources:
   bugtracker: https://github.com/peczenyj/MooseX-Role-DryRunnable/issues
   homepage: https://github.com/peczenyj/MooseX-Role-DryRunnable
   repository: git://github.com/peczenyj/MooseX-Role-DryRunnable.git
-version: 0.001
+version: 0.002
