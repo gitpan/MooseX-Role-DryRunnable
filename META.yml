@@ -1,5 +1,5 @@
 ---
-abstract: 'role for add a dry_run option into your Moose Class'
+abstract: 'role for add a dry_run (or dryrun) option into your Moose Class'
 author:
   - 'Tiago Peczenyj <tiago.peczenyj@gmail.com>'
 build_requires:
@@ -20,4 +20,4 @@ resources:
   bugtracker: https://github.com/peczenyj/MooseX-Role-DryRunnable/issues
   homepage: https://github.com/peczenyj/MooseX-Role-DryRunnable
   repository: git://github.com/peczenyj/MooseX-Role-DryRunnable.git
-version: 0.003
+version: 0.004

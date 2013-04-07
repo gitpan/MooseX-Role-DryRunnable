@@ -7,23 +7,28 @@ with 'MooseX::Role::DryRunnable::Base';
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 parameter methods => (
-  is       => 'ro',
-  required => 1
+  traits  => ['Array'],
+  is      => 'ro',
+  isa     => 'ArrayRef[Str]',
+  default => sub { [] },
+  handles => { all_methods => 'elements' },
 );
 
 role {
   my $p = shift;
   
-  around $p->methods() => sub { 
-    my $method = shift;
-    my $self   = shift;
+  foreach my $method ( $p->all_methods() ){
+    around $method => sub { 
+      my $code = shift;
+      my $self = shift;
 
-    $self->is_dry_run() 
-      ? $self->on_dry_run($method,@_) 
-      : $self->$method(@_)  
+      $self->is_dry_run() 
+        ? $self->on_dry_run($method,@_) 
+        : $self->$code(@_)  
+    }
   }
 };
 
@@ -33,7 +38,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Role::DryRunnable - role for add a dry_run option into your Moose Class
+MooseX::Role::DryRunnable - role for add a dry_run (or dryrun) option into your Moose Class
 
 =head1 SYNOPSIS
 
@@ -52,7 +57,7 @@ MooseX::Role::DryRunnable - role for add a dry_run option into your Moose Class
   }
 
   sub is_dry_run { # required !
-    shift->dry_run
+    $ENV{'DRY_RUN'} || shift->dry_run
   }
 
   sub on_dry_run { # required !
@@ -79,9 +84,9 @@ This method will receive the method name and all of the parameters form the orig
 
 This Role is Parameterized, and we can choose the set of methods to apply the dry_run capability.
 
-=head2 methods
+=head2 methods ArrayRef(Str)
 
-This is the set of methods to be changed, can be a string, an array ref or a regular expression. Each method in this parameter will receive an extra code (using Moose 'around') to act as a Dry Run Method.
+This is the set of methods to be changed, must be an array ref of strings. Each method in this parameter will receive an extra code (using Moose 'around') to act as a Dry Run Method.
 
 =head1 SEE ALSO
 

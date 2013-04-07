@@ -1,5 +1,11 @@
 Revision history for MooseX-Role-DryRunnable
 
+0.004 Sun Apr 6 2013
+- fix Role, to pass the name of the method.
+
+0.003 Sun Apr 6 2013
+- simplify methods and add a ::Base Role.
+
 0.002 Sun Apr 6 2013
 - Second version, fix small stuff.
 

@@ -1,9 +1,9 @@
 
 
 This archive contains the distribution MooseX-Role-DryRunnable,
-version 0.003:
+version 0.004:
 
-  role for add a dry_run option into your Moose Class
+  role for add a dry_run (or dryrun) option into your Moose Class
 
 This software is copyright (c) 2013 by Tiago Peczenyj.
 

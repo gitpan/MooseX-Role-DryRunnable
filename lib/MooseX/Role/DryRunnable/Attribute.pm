@@ -20,7 +20,7 @@ sub UNIVERSAL::dry_it :ATTR(CODE) {
 
       $target->is_dry_run() 
         ? $target->on_dry_run($method,@_) 
-        : $code->($target, @_)
+        : $target->$code(@_)
       }
   ]);
 }

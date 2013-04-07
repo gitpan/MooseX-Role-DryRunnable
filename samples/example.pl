@@ -9,8 +9,7 @@ use lib '../lib';
 use MooseX::Role::DryRunnable::Attribute; # EXPERIMENTAL, export : dry_it
 
 with 'MooseX::Role::DryRunnable' => { 
-  methods => 'bar'
-  # methods => [ qw(bar baz) ]
+  methods => [ qw'bar' ]
 };
 
 has dry_run => (is => 'ro', isa => 'Bool', default => 0);
