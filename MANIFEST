@@ -11,6 +11,7 @@ lib/MooseX/Role/DryRunnable/Attribute.pm
 lib/MooseX/Role/DryRunnable/Base.pm
 perlcritic.rc
 samples/example.pl
+samples/many_roles.pl
 t/00-compile.t
 t/01-load.t
 t/02-basic.t

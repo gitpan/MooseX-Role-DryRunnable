@@ -7,7 +7,7 @@ with 'MooseX::Role::DryRunnable::Base';
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 parameter methods => (
   traits  => ['Array'],
@@ -20,13 +20,13 @@ parameter methods => (
 role {
   my $p = shift;
   
-  foreach my $method ( $p->all_methods() ){
-    around $method => sub { 
+  foreach my $method_name ( $p->all_methods() ){
+    around $method_name => sub { 
       my $code = shift;
       my $self = shift;
 
-      $self->is_dry_run() 
-        ? $self->on_dry_run($method,@_) 
+      $self->is_dry_run($method_name,@_) 
+        ? $self->on_dry_run($method_name,@_) 
         : $self->$code(@_)  
     }
   }
@@ -72,13 +72,13 @@ This module is a L<Moose> Role who require two methods, `is_dry_run` and `on_dry
 
 =head1 REQUIRES
 
-=head2 is_dry_run
+=head2 is_dry_run (self, method_name, argument_list)
 
-This method must return one boolean value. If true, we will execute the alternate code described in `on_dry_run`. You must implement!
+This method will receive the name of the method and the argument list from the original method. Must return a boolean value. If true, we will execute the alternate code described in `on_dry_run`. You must implement!
 
-=head2 on_dry_run
+=head2 on_dry_run (self, method_name, argument_list)
 
-This method will receive the method name and all of the parameters form the original method. You must implement!
+This method will receive the name of the method and the argument list from the original method. You must implement!
 
 =head1 ROLE PARAMETERS 
 
