@@ -30,7 +30,7 @@ subtest "should do nothing if not in dry run mode (using attributes)" => sub {
 };
 
 subtest "should call on_dry_run if in dry run mode (using attributes)" => sub {
-  plan tests => 1;
+  plan tests => 4;
   
   {
     package Foo2;
@@ -43,6 +43,9 @@ subtest "should call on_dry_run if in dry run mode (using attributes)" => sub {
     }
 
     sub is_dry_run { # required !
+      Test::More::isa_ok(shift, 'Foo2');
+      Test::More::is(shift, 'bar');
+      Test::More::is(scalar(@_),0);
       1
     }
 

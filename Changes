@@ -1,5 +1,8 @@
 Revision history for MooseX-Role-DryRunnable
 
+0.006 Mon Apr 15 2013
+- small fixes (attribute, version, sample, etc)
+
 0.005 Mon Apr 7 2013
 - improvement: pass the name of the method (and argument list) to in_dry_run, to create composable rules to activate the state of "dry run".
 

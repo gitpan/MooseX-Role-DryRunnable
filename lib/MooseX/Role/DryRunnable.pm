@@ -1,13 +1,16 @@
 use strict;
 use warnings;
 package MooseX::Role::DryRunnable;
+{
+  $MooseX::Role::DryRunnable::VERSION = '0.006';
+}
 
+use 5.008;
 use MooseX::Role::Parameterized;
 with 'MooseX::Role::DryRunnable::Base';
 
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.005';
 
 parameter methods => (
   traits  => ['Array'],
@@ -57,13 +60,19 @@ MooseX::Role::DryRunnable - role for add a dry_run (or dryrun) option into your 
   }
 
   sub is_dry_run { # required !
+    my $self   = shift;
+    my $method = shift;
+    my @args   = @_;
+    
     $ENV{'DRY_RUN'} || shift->dry_run
   }
 
   sub on_dry_run { # required !
     my $self   = shift;
     my $method = shift;
-    $self->logger("Dry Run method=$method, args: \n", @_);
+    my @args   = @_;
+    
+    $self->logger("Dry Run method=$method, args: \n", @args);
   }
 
 =head1 DESCRIPTION
@@ -75,6 +84,8 @@ This module is a L<Moose> Role who require two methods, `is_dry_run` and `on_dry
 =head2 is_dry_run (self, method_name, argument_list)
 
 This method will receive the name of the method and the argument list from the original method. Must return a boolean value. If true, we will execute the alternate code described in `on_dry_run`. You must implement!
+
+This method can be useful to build a more complex idea of `dry run`. For example you can create groups of methods and create a `is_dry_run` more selective, like methods who save in database and save in filesystem, or you can add/remove some features based on configuration or datetime
 
 =head2 on_dry_run (self, method_name, argument_list)
 

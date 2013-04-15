@@ -1,26 +1,30 @@
 use strict;
 use warnings;
 package MooseX::Role::DryRunnable::Attribute;
+{
+  $MooseX::Role::DryRunnable::Attribute::VERSION = '0.006';
+}
+
 use Moose::Util;
 use Attribute::Handlers;
-
-our $VERSION = '0.001';
 
 sub UNIVERSAL::dry_it :ATTR(CODE) { 
   my $package = shift;
   my $glob    = shift;
   my $method  = *{$glob}{NAME};
   
+  warn "MooseX::Role::DryRunnable::Attribute is Experimental! Be careful!";
+  
   Moose::Util::add_method_modifier($package => around => [ $method => sub { 
       my $code   = shift;
-      my $target = shift;
+      my $self = shift;
 
       die "Should be MooseX::Role::DryRunnable::Base\n" 
-        unless $target->DOES('MooseX::Role::DryRunnable::Base');
+        unless $self->DOES('MooseX::Role::DryRunnable::Base');
 
-      $target->is_dry_run() 
-        ? $target->on_dry_run($method,@_) 
-        : $target->$code(@_)
+      $self->is_dry_run($method, @_) 
+        ? $self->on_dry_run($method, @_) 
+        : $self->$code(@_)
       }
   ]);
 }

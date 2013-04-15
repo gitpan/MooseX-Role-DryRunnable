@@ -1,10 +1,11 @@
 use strict;
 use warnings;
 package MooseX::Role::DryRunnable::Base;
+{
+  $MooseX::Role::DryRunnable::Base::VERSION = '0.006';
+}
 
 use Moose::Role;
-
-our $VERSION = '0.001';
 
 requires 'is_dry_run';
 requires 'on_dry_run';  
